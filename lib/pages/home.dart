@@ -1,12 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gereja_flutter/components/SimpleCarousel.dart';
+import 'package:gereja_flutter/components/card_event.dart';
 import 'package:gereja_flutter/components/card_news.dart';
 import 'package:gereja_flutter/const/dummy_data.dart';
+import 'package:gereja_flutter/models/event_model.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
 import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
+import 'package:gereja_flutter/services/event_services.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -18,8 +22,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<String> listImg = DummyData.imgList;
   final api = AuthServices();
+  final apiEvent = EvenServices();
 
-  @override
+  List<EventModel> event = [];
+
   Future<void> logout() async {
     final resp = await api.logout(context);
     if (resp.statusCode == 200) {
@@ -30,6 +36,25 @@ class _HomepageState extends State<Homepage> {
         ),
       );
     }
+  }
+
+  Future<void> fetchEvent() async {
+    final resp = await apiEvent.get();
+    if (resp.statusCode == 200) {
+      List<dynamic> dataresp = resp.data['data'] as List;
+      List<EventModel> data =
+          dataresp.map((e) => EventModel.fromJson(e)).toList();
+
+      setState(() {
+        event = data;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchEvent();
   }
 
   @override
@@ -47,56 +72,58 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SimpleCarousel(imgList: listImg),
-              TextSaparator(
-                title: "Event",
-                showMore: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EventPage(),
-                    ),
-                  );
-                },
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: DummyData.events.length,
-                itemBuilder: (contex, index) {
-                  var item = DummyData.events[index];
-                  return CardNews(
-                    item: item,
-                    onTapCard: () {},
-                  );
-                },
-              ),
-              TextSaparator(
-                title: "Berita",
-                showMore: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NewsPage(),
-                    ),
-                  );
-                },
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: DummyData.events.length,
-                itemBuilder: (contex, index) {
-                  var item = DummyData.events[index];
-                  return CardNews(item: item);
-                },
-              ),
-            ],
+        child: RefreshIndicator(
+          onRefresh: () => fetchEvent(),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SimpleCarousel(imgList: listImg),
+                TextSaparator(
+                  title: "Event",
+                  showMore: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EventPage(),
+                      ),
+                    );
+                  },
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: event.length,
+                  itemBuilder: (contex, index) {
+                    EventModel item = event[index];
+                    return ListTile(
+                      title: CardEvent(item: item),
+                    );
+                  },
+                ),
+                TextSaparator(
+                  title: "Berita",
+                  showMore: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NewsPage(),
+                      ),
+                    );
+                  },
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: DummyData.events.length,
+                  itemBuilder: (contex, index) {
+                    var item = DummyData.events[index];
+                    return CardNews(item: item);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

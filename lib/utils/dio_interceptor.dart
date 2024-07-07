@@ -14,12 +14,6 @@ class DioInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 
-  // void onResponse(Response response, ResponseInterceptorHandler handler) {
-  //   print(
-  //       'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-  //   super.onResponse(response, handler);
-  // }
-
   @override
   Future<void> onError(
       DioException err, ErrorInterceptorHandler handler) async {

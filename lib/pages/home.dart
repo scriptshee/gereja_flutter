@@ -4,7 +4,9 @@ import 'package:gereja_flutter/components/SimpleCarousel.dart';
 import 'package:gereja_flutter/components/card_news.dart';
 import 'package:gereja_flutter/const/dummy_data.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
+import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
+import 'package:gereja_flutter/services/auth_services.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -15,6 +17,20 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   List<String> listImg = DummyData.imgList;
+  final api = AuthServices();
+
+  @override
+  Future<void> logout() async {
+    final resp = await api.logout(context);
+    if (resp.statusCode == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainPage(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +42,9 @@ class _HomepageState extends State<Homepage> {
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(onPressed: () => logout(), icon: Icon(Icons.login))
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -5,6 +5,7 @@ import 'package:gereja_flutter/pages/home.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
 import 'package:gereja_flutter/themes/components/elevatedButton.dart';
 import 'package:gereja_flutter/themes/components/textinput.dart';
+import 'package:gereja_flutter/utils/use_store.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     }, context);
 
     if (resp.statusCode == 200) {
+      await Store.setToken(resp.data!['access_token']);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

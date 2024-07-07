@@ -20,7 +20,12 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("App Name"),
+        title: Image(
+          image: const AssetImage('assets/logo_gereja.png'),
+          width: 40.sp,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

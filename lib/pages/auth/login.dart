@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gereja_flutter/pages/auth/register.dart';
 import 'package:gereja_flutter/pages/home.dart';
+import 'package:gereja_flutter/services/auth_services.dart';
 import 'package:gereja_flutter/themes/components/elevatedButton.dart';
 import 'package:gereja_flutter/themes/components/textinput.dart';
 
@@ -16,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final api = AuthServices();
   @override
   void dispose() {
     _passwordController.dispose();
@@ -23,13 +26,21 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submitForm() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Homepage(),
-      ),
-    );
+  @override
+  Future<void> _submitForm() async {
+    final resp = await api.login({
+      "email": _emailController.text,
+      "password": _passwordController.text,
+    }, context);
+
+    if (resp.statusCode == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Homepage(),
+        ),
+      );
+    }
   }
 
   @override
@@ -42,6 +53,11 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image(
+              image: const AssetImage('assets/logo_gereja.png'),
+              width: 100.sp,
+            ),
+            SizedBox(height: 10.sp),
             SimpleTextField(
               labelText: 'Email',
               textEditingController: _emailController,
@@ -60,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               width: double.infinity,
               child: SimpleElevatedButton(
                 onPressed: _submitForm,
-                color: Colors.blue,
+                color: Colors.indigo,
                 child: const Text(
                   'Masuk',
                   style: TextStyle(color: Colors.white),
@@ -77,7 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 );
               },
-              child: Text("Daftar"),
+              child: const Text(
+                "Daftar",
+                style: TextStyle(color: Colors.indigo),
+              ),
             ),
           ],
         ),

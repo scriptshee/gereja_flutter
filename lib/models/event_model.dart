@@ -1,3 +1,5 @@
+import 'package:gereja_flutter/models/user_model.dart';
+
 class EventModel {
   int? id;
   String? thumbnail;
@@ -7,7 +9,7 @@ class EventModel {
   String? startDatetime;
   dynamic endDatetime;
   bool? isEndedtime;
-  int? userId;
+  User? user;
   String? createdAt;
   String? updatedAt;
 
@@ -20,7 +22,7 @@ class EventModel {
     this.startDatetime,
     this.endDatetime,
     this.isEndedtime,
-    this.userId,
+    this.user,
     this.createdAt,
     this.updatedAt,
   });
@@ -35,7 +37,7 @@ class EventModel {
       startDatetime: json['start_datetime'],
       endDatetime: json['end_datetime'],
       isEndedtime: json['is_endedtime'],
-      userId: json['user_id'],
+      user: json['user_id'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
     );
@@ -51,7 +53,7 @@ class EventModel {
       'startDatetime': startDatetime,
       'endDatetime': endDatetime,
       'isEndedtime': isEndedtime,
-      'userId': userId,
+      'user': user,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };

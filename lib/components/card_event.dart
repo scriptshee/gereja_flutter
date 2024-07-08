@@ -18,15 +18,15 @@ class CardEvent extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // ClipOval(
-            //   child: Image.network(
-            //     'https://via.placeholder.com/150',
-            //     width: 50,
-            //     height: 50,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-            // SizedBox(width: 15.sp),
+            ClipOval(
+              child: Image.network(
+                '${item.thumbnail}',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 15.sp),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

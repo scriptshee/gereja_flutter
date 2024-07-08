@@ -44,7 +44,6 @@ class _HomepageState extends State<Homepage> {
       List<dynamic> dataresp = resp.data['data'] as List;
       List<EventModel> data =
           dataresp.map((e) => EventModel.fromJson(e)).toList();
-
       setState(() {
         event = data;
       });

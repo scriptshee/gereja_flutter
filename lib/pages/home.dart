@@ -6,6 +6,7 @@ import 'package:gereja_flutter/components/card_event.dart';
 import 'package:gereja_flutter/components/card_news.dart';
 import 'package:gereja_flutter/const/dummy_data.dart';
 import 'package:gereja_flutter/models/event_model.dart';
+import 'package:gereja_flutter/pages/event/event_detail.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
 import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
@@ -70,59 +71,67 @@ class _HomepageState extends State<Homepage> {
           IconButton(onPressed: () => logout(), icon: Icon(Icons.login))
         ],
       ),
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () => fetchEvent(),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SimpleCarousel(imgList: listImg),
-                TextSaparator(
-                  title: "Event",
-                  showMore: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EventPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: event.length,
-                  itemBuilder: (contex, index) {
-                    EventModel item = event[index];
-                    return ListTile(
-                      title: CardEvent(item: item),
-                    );
-                  },
-                ),
-                TextSaparator(
-                  title: "Berita",
-                  showMore: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NewsPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: DummyData.events.length,
-                  itemBuilder: (contex, index) {
-                    var item = DummyData.events[index];
-                    return CardNews(item: item);
-                  },
-                ),
-              ],
-            ),
+      body: RefreshIndicator(
+        onRefresh: () => fetchEvent(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SimpleCarousel(imgList: listImg),
+              TextSaparator(
+                title: "Event",
+                showMore: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EventPage(),
+                    ),
+                  );
+                },
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: event.length,
+                itemBuilder: (contex, index) {
+                  EventModel item = event[index];
+                  return ListTile(
+                    title: CardEvent(
+                      item: item,
+                      onTapCard: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventDetail(event: item),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+              TextSaparator(
+                title: "Berita",
+                showMore: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewsPage(),
+                    ),
+                  );
+                },
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: DummyData.events.length,
+                itemBuilder: (contex, index) {
+                  var item = DummyData.events[index];
+                  return CardNews(item: item);
+                },
+              ),
+            ],
           ),
         ),
       ),

@@ -18,7 +18,8 @@ class CardEvent extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ClipOval(
+            ClipRect(
+              clipBehavior: Clip.hardEdge,
               child: Image.network(
                 '${item.thumbnail}',
                 width: 50,
@@ -39,6 +40,10 @@ class CardEvent extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
+                ),
+                Text(
+                  "Mulai: ${item.startDatetime} - Sampai: ${item.endDatetime}",
+                  style: TextStyle(fontSize: 10.sp),
                 ),
               ],
             )

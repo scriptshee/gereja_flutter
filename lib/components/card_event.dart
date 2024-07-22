@@ -14,39 +14,43 @@ class CardEvent extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 10.sp,
-          vertical: 7.sp,
+          vertical: 3.sp,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRect(
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(
-                '${item.thumbnail}',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${item.createdAt}",
+                    style: TextStyle(fontSize: 11.sp),
+                  ),
+                  Text(
+                    "${item.title}",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    "Mulai: ${item.startDatetime} - Sampai: ${item.endDatetime}",
+                    style: TextStyle(fontSize: 10.sp),
+                  ),
+                ],
               ),
             ),
             SizedBox(width: 15.sp),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${item.createdAt}",
-                  style: TextStyle(fontSize: 11.sp),
-                ),
-                Text(
-                  "${item.title}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  "Mulai: ${item.startDatetime} - Sampai: ${item.endDatetime}",
-                  style: TextStyle(fontSize: 10.sp),
-                ),
-              ],
-            )
+            Container(
+              decoration: BoxDecoration(border: Border.all()),
+              child: Image.network(
+                '${item.thumbnail}',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
           ],
         ),
       ),

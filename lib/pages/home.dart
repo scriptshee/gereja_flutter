@@ -6,12 +6,14 @@ import 'package:gereja_flutter/components/card_event.dart';
 import 'package:gereja_flutter/components/card_news.dart';
 import 'package:gereja_flutter/const/dummy_data.dart';
 import 'package:gereja_flutter/models/event_model.dart';
+import 'package:gereja_flutter/models/news_model.dart';
 import 'package:gereja_flutter/pages/event/event_detail.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
 import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
 import 'package:gereja_flutter/services/event_services.dart';
+import 'package:gereja_flutter/services/news_services.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -24,8 +26,10 @@ class _HomepageState extends State<Homepage> {
   List<String> listImg = DummyData.imgList;
   final api = AuthServices();
   final apiEvent = EvenServices();
+  final apiNews = NewsServices();
 
   List<EventModel> event = [];
+  List<News> news = [];
 
   Future<void> logout() async {
     final resp = await api.logout(context);
@@ -51,10 +55,27 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  Future<void> fetchNews() async {
+    final resp = await apiNews.get(context);
+    if (resp.statusCode == 200) {
+      List<dynamic> dataresp = resp.data['data'] as List;
+      List<News> data = dataresp.map((e) => News.fromJson(e)).toList();
+      setState(() {
+        news = data;
+      });
+    }
+  }
+
+  Future<void> pullRefresh() async {
+    await fetchEvent();
+    await fetchNews();
+  }
+
   @override
   void initState() {
     super.initState();
     fetchEvent();
+    fetchNews();
   }
 
   @override
@@ -72,7 +93,7 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => fetchEvent(),
+        onRefresh: () => pullRefresh(),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -96,18 +117,16 @@ class _HomepageState extends State<Homepage> {
                 itemCount: event.length,
                 itemBuilder: (contex, index) {
                   EventModel item = event[index];
-                  return ListTile(
-                    title: CardEvent(
-                      item: item,
-                      onTapCard: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EventDetail(event: item),
-                          ),
-                        );
-                      },
-                    ),
+                  return CardEvent(
+                    item: item,
+                    onTapCard: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventDetail(event: item),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -125,9 +144,9 @@ class _HomepageState extends State<Homepage> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: DummyData.events.length,
+                itemCount: news.length,
                 itemBuilder: (contex, index) {
-                  var item = DummyData.events[index];
+                  News item = news[index];
                   return CardNews(item: item);
                 },
               ),

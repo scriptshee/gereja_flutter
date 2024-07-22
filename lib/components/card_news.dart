@@ -1,46 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gereja_flutter/models/news_model.dart';
 
 class CardNews extends StatelessWidget {
   CardNews({super.key, required this.item, this.onTapCard});
 
-  final item;
+  final News item;
   VoidCallback? onTapCard;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTapCard,
       child: Container(
+        width: double.infinity,
         padding: EdgeInsets.symmetric(
           horizontal: 10.sp,
-          vertical: 7.sp,
+          vertical: 3.sp,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // ClipOval(
-            //   child: Image.network(
-            //     'https://via.placeholder.com/150',
-            //     width: 50,
-            //     height: 50,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-            // SizedBox(width: 15.sp),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${item['created_at']}",
-                  style: TextStyle(fontSize: 11.sp),
-                ),
-                Text(
-                  "${item['label']}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${item.publishedDate}",
+                    style: TextStyle(fontSize: 11.sp),
                   ),
-                ),
-              ],
-            )
+                  Text(
+                    "${item.title}",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow
+                        .ellipsis, // Ensures the text will have ellipsis if it overflows
+                    maxLines: 2, // Limits the text to a maximum of 2 lines
+                    softWrap: true, // Enables wrapping
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 15.sp),
+            Container(
+              decoration: BoxDecoration(border: Border.all()),
+              child: Image.network(
+                '${item.thumbnail}',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
           ],
         ),
       ),

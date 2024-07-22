@@ -44,12 +44,20 @@ class CardNews extends StatelessWidget {
             ),
             SizedBox(width: 15.sp),
             Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: Image.network(
-                '${item.thumbnail}',
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(
+                    8.0), // Rounded corners for the border
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                    8.0), // Same rounded corners for the image
+                child: Image.network(
+                  '${item.thumbnail}',
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ],

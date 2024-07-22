@@ -10,6 +10,7 @@ import 'package:gereja_flutter/models/news_model.dart';
 import 'package:gereja_flutter/pages/event/event_detail.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
 import 'package:gereja_flutter/pages/main.dart';
+import 'package:gereja_flutter/pages/news/news_detail.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
 import 'package:gereja_flutter/services/event_services.dart';
@@ -147,7 +148,17 @@ class _HomepageState extends State<Homepage> {
                 itemCount: news.length,
                 itemBuilder: (contex, index) {
                   News item = news[index];
-                  return CardNews(item: item);
+                  return CardNews(
+                    item: item,
+                    onTapCard: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewsDetail(event: item),
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             ],

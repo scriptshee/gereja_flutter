@@ -44,6 +44,25 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> checkToken() async {
+    String? token = await Store.getToken();
+    if (token != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Homepage(),
+        ),
+      );
+    }
+    ;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(

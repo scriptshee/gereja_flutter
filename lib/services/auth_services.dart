@@ -26,6 +26,29 @@ class AuthServices {
     }
   }
 
+  Future<dynamic> register(
+      Map<String, dynamic> body, BuildContext context) async {
+    context.loaderOverlay.show();
+    try {
+      final response = await _dio.post("$_baseUrl/register", data: body);
+      context.loaderOverlay.hide();
+      return response;
+    } on DioException catch (e) {
+      context.loaderOverlay.hide();
+
+      dynamic statusCode = e!.response!.statusCode;
+
+      if (statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${e.response!.data['data']}'),
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ));
+      }
+      return e;
+    }
+  }
+
   Future<dynamic> logout(BuildContext context) async {
     context.loaderOverlay.show();
     try {

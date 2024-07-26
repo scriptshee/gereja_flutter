@@ -27,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  @override
   Future<void> _submitForm() async {
     final resp = await api.login({
       "email": _emailController.text,

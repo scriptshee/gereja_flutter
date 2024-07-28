@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gereja_flutter/pages/home/home_screen.dart';
 import 'package:gereja_flutter/pages/home/setting_screen.dart';
 import 'package:gereja_flutter/pages/main.dart';
+import 'package:gereja_flutter/pages/notification/notificaton_screen.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,15 +33,8 @@ class _HomePageState extends State<HomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
-      'Profile Page',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    ),
+    NotificationScreen(),
     SettingScreen()
-    // Text(
-    //   'Settings Page',
-    //   style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    // ),
   ];
 
   void _onItemTapped(int index) {

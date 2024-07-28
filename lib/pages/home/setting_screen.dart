@@ -26,6 +26,10 @@ class _SettingScreenState extends State<SettingScreen> {
     {
       "label": "Misi",
       "value": "misi",
+    },
+    {
+      "label": "Tentang",
+      "value": "about",
     }
   ];
 

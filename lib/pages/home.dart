@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gereja_flutter/pages/home/home_screen.dart';
+import 'package:gereja_flutter/pages/home/setting_screen.dart';
 import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
 
@@ -35,10 +36,11 @@ class _HomePageState extends State<HomePage> {
       'Profile Page',
       style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
     ),
-    Text(
-      'Settings Page',
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-    ),
+    SettingScreen()
+    // Text(
+    //   'Settings Page',
+    //   style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    // ),
   ];
 
   void _onItemTapped(int index) {

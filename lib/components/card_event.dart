@@ -25,12 +25,12 @@ class CardEvent extends StatelessWidget {
                 children: [
                   Text(
                     "${item.createdAt}",
-                    style: TextStyle(fontSize: 11.sp),
+                    style: TextStyle(fontSize: 10.sp),
                   ),
                   Text(
                     "${item.title}",
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

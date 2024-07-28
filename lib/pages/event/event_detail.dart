@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:gereja_flutter/models/event_model.dart';
+import 'package:gereja_flutter/pages/event/event_attendace.dart';
 
 class EventDetail extends StatefulWidget {
   EventDetail({
@@ -34,18 +35,30 @@ class _EventDetailState extends State<EventDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${widget.event?.title}",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    "${widget.event?.startDatetime}",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${widget.event?.title}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            "${widget.event?.startDatetime}",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text("${widget.event!.attendaceTotal} Hadir")
+                    ],
                   ),
                   SizedBox(height: 20.sp),
                   HtmlWidget("${widget.event!.content}")
@@ -55,14 +68,23 @@ class _EventDetailState extends State<EventDetail> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(
-          "Hadir Event",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.indigo,
-      ),
+      floatingActionButton: widget.event!.userAttendace == null
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventAttendace(id: widget.event!.id),
+                  ),
+                );
+              },
+              label: Text(
+                "Hadir Event",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.indigo,
+            )
+          : null,
     );
   }
 }

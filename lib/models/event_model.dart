@@ -10,6 +10,8 @@ class EventModel {
   dynamic endDatetime;
   bool? isEndedtime;
   User? user;
+  int? attendaceTotal;
+  bool? userAttendace;
   String? createdAt;
   String? updatedAt;
 
@@ -23,6 +25,8 @@ class EventModel {
     this.endDatetime,
     this.isEndedtime,
     this.user,
+    this.attendaceTotal,
+    this.userAttendace,
     this.createdAt,
     this.updatedAt,
   });
@@ -38,6 +42,8 @@ class EventModel {
       endDatetime: json['end_datetime'],
       isEndedtime: json['is_endedtime'],
       user: json['user_id'],
+      attendaceTotal: json['attendace_total'],
+      userAttendace: json['is_user_attendace'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
     );
@@ -54,6 +60,8 @@ class EventModel {
       'endDatetime': endDatetime,
       'isEndedtime': isEndedtime,
       'user': user,
+      'attendaceTotal': attendaceTotal,
+      'userAttendace': userAttendace,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };

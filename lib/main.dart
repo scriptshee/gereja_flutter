@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
             title: 'App',
             // You can use the library anywhere in the app even in theme
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              useMaterial3: true,
+              colorSchemeSeed: Colors.white,
             ),
             home: child,
           ),

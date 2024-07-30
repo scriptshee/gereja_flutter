@@ -7,6 +7,7 @@ import 'package:gereja_flutter/pages/home/setting_screen.dart';
 import 'package:gereja_flutter/pages/main.dart';
 import 'package:gereja_flutter/pages/notification/notificaton_screen.dart';
 import 'package:gereja_flutter/services/auth_services.dart';
+import 'package:gereja_flutter/utils/use_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,14 +22,13 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> logout() async {
     final resp = await api.logout(context);
-    if (resp.statusCode == 200) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MainPage(),
-        ),
-      );
-    }
+    await Store.clear();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MainPage(),
+      ),
+    );
   }
 
   static const List<Widget> _widgetOptions = <Widget>[

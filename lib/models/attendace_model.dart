@@ -1,7 +1,9 @@
+import 'package:gereja_flutter/models/event_model.dart';
+
 class AttendaceModel {
   int? id;
   int? eventId;
-  String? event;
+  EventModel? event;
   String? eventStart;
   String? endDatetime;
 
@@ -17,7 +19,7 @@ class AttendaceModel {
     return AttendaceModel(
       id: json['id'],
       eventId: json['event_id'],
-      event: json['event'],
+      event: json['event'] as EventModel,
       eventStart: json['event_start'],
       endDatetime: json['end_datetime'],
     );

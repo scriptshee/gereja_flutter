@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gereja_flutter/pages/attendance/attendace_page.dart';
 import 'package:gereja_flutter/pages/home/home_screen.dart';
 import 'package:gereja_flutter/pages/home/setting_screen.dart';
 import 'package:gereja_flutter/pages/main.dart';
@@ -34,7 +35,8 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     NotificationScreen(),
-    SettingScreen()
+    AttendacePage(),
+    SettingScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -69,12 +71,17 @@ class _HomePageState extends State<HomePage> {
             label: 'Notification',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Event',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: 'About',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );

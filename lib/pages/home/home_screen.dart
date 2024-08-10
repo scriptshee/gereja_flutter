@@ -10,6 +10,7 @@ import 'package:gereja_flutter/pages/event/event_detail.dart';
 import 'package:gereja_flutter/pages/event/event_page.dart';
 import 'package:gereja_flutter/pages/news/news_detail.dart';
 import 'package:gereja_flutter/pages/news/news_page.dart';
+import 'package:gereja_flutter/services/carouse_services.dart';
 import 'package:gereja_flutter/services/event_services.dart';
 import 'package:gereja_flutter/services/news_services.dart';
 
@@ -24,9 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> listImg = DummyData.imgList;
   final apiEvent = EvenServices();
   final apiNews = NewsServices();
+  final apiCarousel = CarouseServices();
 
   List<EventModel> event = [];
   List<News> news = [];
+  List<dynamic> carousel = [];
 
   Future<void> fetchEvent() async {
     final resp = await apiEvent.get();
@@ -51,11 +54,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> fetchCarousel() async {
+    final resp = await apiCarousel.get();
+    if (resp.statusCode == 200) {
+      List<dynamic> dataresp = resp.data['data'] as List;
+      setState(() {
+        carousel = dataresp;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     fetchEvent();
     fetchNews();
+    fetchCarousel();
   }
 
   @override
@@ -65,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SimpleCarousel(imgList: listImg),
+          SimpleCarousel(imgList: carousel),
           TextSaparator(
             title: "Event",
             showMore: () {

@@ -7,7 +7,7 @@ class SimpleCarousel extends StatelessWidget {
     required this.imgList,
   });
 
-  final List<String> imgList;
+  final List<dynamic> imgList;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class SimpleCarousel extends StatelessWidget {
           .map((item) => Container(
                 color: Colors.green,
                 child: Image.network(
-                  item,
-                  fit: BoxFit.cover,
+                  item['image'],
+                  fit: BoxFit.contain,
                 ),
               ))
           .toList(),

@@ -15,7 +15,6 @@ class SimpleCarousel extends StatelessWidget {
       options: CarouselOptions(autoPlay: true),
       items: imgList
           .map((item) => Container(
-                color: Colors.green,
                 child: Image.network(
                   item['image'],
                   fit: BoxFit.contain,

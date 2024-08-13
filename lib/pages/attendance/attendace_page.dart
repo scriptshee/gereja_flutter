@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gereja_flutter/models/event_model.dart';
 import 'package:gereja_flutter/pages/event/event_detail.dart';
 import 'package:gereja_flutter/services/attendace_services.dart';
-import 'package:gereja_flutter/models/attendace_model.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AttendacePage extends StatefulWidget {
@@ -23,6 +22,7 @@ class _AttendacePageState extends State<AttendacePage> {
     context.loaderOverlay.show();
     try {
       var resp = await attendaceServices.get();
+      print(resp);
       if (resp.statusCode == 200) {
         List<dynamic> dataresp = resp.data['data'] as List;
         // print(dataresp.length);

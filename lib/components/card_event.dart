@@ -34,9 +34,20 @@ class CardEvent extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    "Mulai: ${item.startDatetime} - Sampai: ${item.endDatetime}",
-                    style: TextStyle(fontSize: 10.sp),
+                  Row(
+                    children: [
+                      Text(
+                        "Mulai: ${item.startDatetime}",
+                        style: TextStyle(fontSize: 10.sp),
+                      ),
+                      item.isEndedtime == true
+                          ? Text(" - Sampai Selesai",
+                              style: TextStyle(fontSize: 10.sp))
+                          : Text(
+                              " - Sampai: ${item.endDatetime}",
+                              style: TextStyle(fontSize: 10.sp),
+                            ),
+                    ],
                   ),
                 ],
               ),

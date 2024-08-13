@@ -39,6 +39,24 @@ class _EventAttendaceState extends State<EventAttendace> {
     context.loaderOverlay.hide();
   }
 
+  Future<void> absence() async {
+    context.loaderOverlay.show();
+    if (noteController.text.isNotEmpty) {
+      try {
+        var resp = await evenServices
+            .store(widget.id, {"note": noteController.text, "present": 0});
+        debugPrint(resp.toString());
+        context.loaderOverlay.hide();
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } catch (e) {
+        debugPrint(e.toString());
+        context.loaderOverlay.hide();
+      }
+    }
+    context.loaderOverlay.hide();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +80,7 @@ class _EventAttendaceState extends State<EventAttendace> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => absence(),
                         style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(Colors.grey),
